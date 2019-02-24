@@ -10,11 +10,14 @@
 
 #include <QDebug>
 
+#include <iostream>
+#include <cstdlib>
 
-static QTextStream textOut(stdout);
 
 void readDirectory(const QString& szPath, QTextStream& out)
 {
+	QTextStream textOut(stdout);
+
 	textOut << "*** DIRECTORY ***: " << szPath << "\n";
 
 	QMimeDatabase	mimeDB;
