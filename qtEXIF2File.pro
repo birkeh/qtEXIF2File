@@ -1,5 +1,26 @@
 QT -= gui
 
+win32-msvc* {
+    contains(QT_ARCH, i386) {
+        message("msvc 32-bit")
+    } else {
+        message("msvc 64-bit")
+    }
+}
+
+win32-g++ {
+    message("mingw")
+    INCLUDEPATH += C:\dev\3rdParty\exiv2\include C:\dev\3rdParty\libraw
+    LIBS += -LC:\dev\3rdParty\exiv2\lib -lexiv2.dll -LC:\dev\3rdParty\libraw\lib -lraw -lws2_32
+}
+
+unix {
+    message("*nix")
+    LIBS += -lraw -lexiv2
+}
+
+QMAKE_CXXFLAGS += -DLIBRAW_NODLL -DLIBRAW_NOTHREADS
+
 CONFIG += c++11 console
 CONFIG -= app_bundle
 
@@ -15,7 +36,9 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-        main.cpp
+        main.cpp \
+    cexif.cpp \
+    cpicture.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -24,3 +47,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 DISTFILES += \
     README.md
+
+HEADERS += \
+    cexif.h \
+    cpicture.h
