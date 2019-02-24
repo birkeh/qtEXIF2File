@@ -11,8 +11,12 @@
 #include <QDebug>
 
 
+static QTextStream textOut(stdout);
+
 void readDirectory(const QString& szPath, QTextStream& out)
 {
+	textOut << "*** DIRECTORY ***: " << szPath << "\n";
+
 	QMimeDatabase	mimeDB;
 	QDir			dir(szPath);
 	QStringList		szDirs	= dir.entryList(QDir::Dirs);
@@ -32,7 +36,7 @@ void readDirectory(const QString& szPath, QTextStream& out)
 
 		if(mimeType.name().startsWith("image"))
 		{
-			qInfo() << fileInfo.fileName();
+			textOut << "--- File: " << fileInfo.fileName() << "\n";
 
 			cPicture		picture;
 			if(picture.fromFile(fileInfo.filePath()))
