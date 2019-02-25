@@ -27,7 +27,19 @@ bool cEXIF::fromFile(const QString& szFileName)
 
 	m_szFileName	= "";
 
-	Exiv2::Image::UniquePtr			image		= Exiv2::ImageFactory::open(szFileName.toLocal8Bit().toStdString());
+	Exiv2::Image::UniquePtr	image;
+
+	try
+	{
+		image	= Exiv2::ImageFactory::open(szFileName.toLocal8Bit().toStdString());
+	}
+	catch (Exiv2::AnyError& e)
+	{
+		qDebug() << e.what();
+//		std::cout << "Caught Exiv2 exception '" << e << "'\n";
+		return(false);
+	}
+
 	if(!image.get())
 		return(false);
 
