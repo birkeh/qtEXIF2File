@@ -13,6 +13,8 @@
 #include <iostream>
 #include <cstdlib>
 
+#define SEPARATOR	"\t"
+
 
 void readDirectory(const QString& szPath, QTextStream& out)
 {
@@ -43,7 +45,7 @@ void readDirectory(const QString& szPath, QTextStream& out)
 
 			cPicture		picture;
 			if(picture.fromFile(fileInfo.filePath()))
-				out << fileInfo.absolutePath() << ";" << fileInfo.fileName() << ";" << fileInfo.size() << ";" << picture.dateTime().toString("yyyy-MM-dd hh:mm:ss") << ";" << picture.imageWidth() << ";" << picture.imageHeight() << ";" << picture.cameraModel() << "\n";
+				out << fileInfo.absolutePath() << SEPARATOR << fileInfo.fileName() << SEPARATOR << fileInfo.size() << SEPARATOR << picture.dateTime().toString("yyyy-MM-dd hh:mm:ss") << SEPARATOR << picture.imageWidth() << SEPARATOR << picture.imageHeight() << SEPARATOR << picture.cameraModel() << "\n";
 		}
 	}
 }
@@ -71,7 +73,7 @@ int main(int argc, char *argv[])
 		{
 			QTextStream	out(&file);
 
-			out << "directory;name;size;date;width;height;camera\n";
+			out << "directory" << SEPARATOR << "name" << SEPARATOR << "size" << SEPARATOR << "date" << SEPARATOR << "width" << SEPARATOR << "height" << SEPARATOR << "camera\n";
 
 			readDirectory(args[0], out);
 		}
